@@ -1,0 +1,10 @@
+services:
+  app:
+    container_name: albahotel-app
+    environment:
+      TZ: UTC
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8000:8000
