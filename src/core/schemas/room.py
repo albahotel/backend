@@ -8,8 +8,8 @@ class RoomReadDTO(SQLAlchemyDTO[Room]):
 
 
 class RoomWriteDTO(SQLAlchemyDTO[Room]):
-    config = SQLAlchemyDTOConfig(exclude={"id", "bookings"})
+    config = SQLAlchemyDTOConfig(exclude={"id", "bookings", "alerts"})
 
 
 class RoomUpdateDTO(SQLAlchemyDTO[Room]):
-    config = SQLAlchemyDTOConfig(exclude={"id", "bookings"}, partial=True)
+    config = SQLAlchemyDTOConfig(exclude={"id", "bookings", "alerts"}, partial=True)
