@@ -7,4 +7,4 @@ run:
 	docker compose up
 
 format:
-	ruff check --fix
+	ruff format .
