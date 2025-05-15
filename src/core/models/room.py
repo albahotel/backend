@@ -10,6 +10,7 @@ from . import Base
 
 class Room(Base):
     __tablename__ = "rooms"
-    number: Mapped[int] = mapped_column(Integer(), primary_key=True)
+    
+    number: Mapped[int] = mapped_column(Integer(), unique=True)
     bookings: Mapped[List["Booking"]] = relationship(back_populates="room")
     capacity: Mapped[int] = mapped_column(Integer())

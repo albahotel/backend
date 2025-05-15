@@ -2,7 +2,7 @@ from litestar import Litestar, get
 from litestar.plugins.sqlalchemy import SyncSessionConfig, SQLAlchemySyncConfig, SQLAlchemyPlugin
 
 from src.core.config import settings
-
+from src.controllers.api import api_router
 
 @get("/")
 def index() -> dict[str, str]:
@@ -16,6 +16,6 @@ sqlalchemy_config = SQLAlchemySyncConfig(
 sqlalchemy_plugin = SQLAlchemyPlugin(config=sqlalchemy_config)
 
 app = Litestar(
-    route_handlers=[index],
+    route_handlers=[index, api_router],
     plugins=[sqlalchemy_plugin]
 )

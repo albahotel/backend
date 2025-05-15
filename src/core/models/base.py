@@ -1,6 +1,5 @@
-from sqlalchemy.orm import DeclarativeBase
+from litestar.plugins.sqlalchemy import base
 
-
-class Base(DeclarativeBase):
-    pass
+class Base(base.BigIntBase):
+    __abstract__ = True
     

@@ -1,8 +1,8 @@
 """Bookings and Rooms
 
-Revision ID: 6370aa6ee82e
+Revision ID: 71d25aaef758
 Revises: 
-Create Date: 2025-05-15 19:24:31.007940
+Create Date: 2025-05-15 21:17:50.584731
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '6370aa6ee82e'
+revision: str = '71d25aaef758'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -24,18 +24,20 @@ def upgrade() -> None:
     op.create_table('rooms',
     sa.Column('number', sa.Integer(), nullable=False),
     sa.Column('capacity', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('number')
+    sa.Column('id', sa.BigInteger().with_variant(sa.Integer(), 'sqlite'), nullable=False),
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_rooms')),
+    sa.UniqueConstraint('number', name=op.f('uq_rooms_number'))
     )
     op.create_table('bookings',
-    sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('room_number', sa.Integer(), nullable=False),
     sa.Column('customer', sa.String(length=50), nullable=False),
     sa.Column('passport', sa.String(length=10), nullable=False),
     sa.Column('peoples', sa.Integer(), nullable=False),
     sa.Column('date_in', sa.Date(), nullable=False),
     sa.Column('date_out', sa.Date(), nullable=False),
-    sa.ForeignKeyConstraint(['room_number'], ['rooms.number'], ),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('id', sa.BigInteger().with_variant(sa.Integer(), 'sqlite'), nullable=False),
+    sa.ForeignKeyConstraint(['room_number'], ['rooms.number'], name=op.f('fk_bookings_room_number_rooms')),
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_bookings'))
     )
     # ### end Alembic commands ###
 

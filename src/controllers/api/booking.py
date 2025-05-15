@@ -1,0 +1,51 @@
+from litestar import Controller, get, post, delete, patch
+from litestar.di import Provide
+from litestar.exceptions import HTTPException
+
+from typing import List
+
+from src.core.models import Booking
+from src.core.schemas.booking import BookingReadDTO, BookingWriteDTO, BookingUpdateDTO
+from src.core.providers import provide_booking_repository, provide_room_repository
+from src.core.repositories import BookingRepository, RoomRepository
+
+
+class BookingController(Controller):
+    path = "/booking"
+    dependencies = {"booking_repository": Provide(provide_booking_repository), "room_repository": Provide(provide_room_repository)}
+    return_dto = BookingReadDTO
+    
+    @get(path="/")
+    def get_all(self, booking_repository: BookingRepository) -> List[Booking]:
+        return booking_repository.list()
+    
+    @get(path="/{id:int}")
+    def get(self, id: int, booking_repository: BookingRepository) -> Booking:
+        booking = booking_repository.get_one_or_none(id=id)
+        if booking is None:
+            raise HTTPException(status_code=404, detail=f"Booking with ID {id} not found")
+        return booking
+    
+    @post(path="/", dto=BookingWriteDTO)
+    def create(
+        self,
+        data: Booking,
+        booking_repository: BookingRepository,
+        room_repository: RoomRepository,
+    ) -> Booking:
+        if room_repository.get_one_or_none(number=data.room_number) is None:
+            raise HTTPException(status_code=404, detail=f"Room with number {data.room_number} not found")
+        return booking_repository.add(data, auto_commit=True)
+    
+    @delete(path="/{id:int}")
+    def delete(self, id: int, booking_repository: BookingRepository) -> None:
+        if booking_repository.get_one_or_none(id=id) is None:
+            raise HTTPException(status_code=404, detail=f"Booking with ID {id} not found")
+        booking_repository.delete(id, auto_commit=True)
+
+    @patch(path="/{id:int}", dto=BookingUpdateDTO)
+    def partial(self, id: int, data: Booking, booking_repository: BookingRepository) -> Booking:
+        if booking_repository.get_one_or_none(id=id) is None:
+            raise HTTPException(status_code=404, detail=f"Booking with ID {id} not found")
+        data.id = id
+        return booking_repository.update(data, auto_commit=True)
