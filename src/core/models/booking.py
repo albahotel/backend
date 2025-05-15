@@ -8,15 +8,16 @@ if TYPE_CHECKING:
     from .room import Room
 from . import Base
 
+
 class Booking(Base):
     __tablename__ = "bookings"
 
     room_number: Mapped[int] = mapped_column(ForeignKey("rooms.number"))
     room: Mapped["Room"] = relationship(back_populates="bookings")
-    
+
     customer: Mapped[str] = mapped_column(String(50))
     passport: Mapped[str] = mapped_column(String(10))
     peoples: Mapped[int] = mapped_column(Integer())
-    
+
     date_in: Mapped[date] = mapped_column(Date())
     date_out: Mapped[date] = mapped_column(Date())
