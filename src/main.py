@@ -4,6 +4,7 @@ from litestar.plugins.sqlalchemy import (
     SQLAlchemySyncConfig,
     SQLAlchemyPlugin,
 )
+from litestar.config.cors import CORSConfig
 
 from src.core.config import settings
 from src.controllers.api import api_router
@@ -24,4 +25,11 @@ sqlalchemy_config = SQLAlchemySyncConfig(
 
 sqlalchemy_plugin = SQLAlchemyPlugin(config=sqlalchemy_config)
 
-app = Litestar(route_handlers=[index, api_router], plugins=[sqlalchemy_plugin])
+cors_config = CORSConfig(
+    allow_origins=["*"]
+)
+app = Litestar(
+    route_handlers=[index, api_router],
+    plugins=[sqlalchemy_plugin],
+    cors_config=cors_config,
+)
