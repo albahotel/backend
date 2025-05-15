@@ -14,6 +14,7 @@ uvicorn = "^0.34.2"
 pydantic-settings = "^2.9.1"
 psycopg-binary = "^3.2.9"
 advanced-alchemy = "^1.4.3"
+psycopg = "^3.2.9"
 
 
 [tool.poetry.group.dev.dependencies]
