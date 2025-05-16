@@ -42,7 +42,9 @@ class BookingController(Controller):
             raise HTTPException(
                 status_code=404, detail=f"Room with number {data.room_number} not found"
             )
-        if not room_repository.is_room_available(data.room_number, data.date_in, data.date_out):
+        if not room_repository.is_room_available(
+            data.room_number, data.date_in, data.date_out
+        ):
             raise HTTPException(status_code=400, detail="Room is not free")
         return booking_repository.add(data, auto_commit=True)
 

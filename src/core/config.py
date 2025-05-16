@@ -6,12 +6,13 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent.parent
 
 
-class Database(BaseModel):
+class DatabaseConfig(BaseModel):
     host: str
     name: str
     user: str
     password: str
     url: str
+    async_url: str
 
     @property
     def migrations_url(self) -> str:
@@ -20,8 +21,17 @@ class Database(BaseModel):
         )
 
 
+class RedisConfig(BaseModel):
+    host: str
+    password: str
+    user: str
+    user_password: str
+    url: str
+
+
 class Settings(BaseSettings):
-    database: Database
+    database: DatabaseConfig
+    redis: RedisConfig
 
     class Config:
         env_file = BASE_DIR / ".env"

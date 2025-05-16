@@ -7,7 +7,12 @@ from .alert import AlertController
 
 api_router = Router(
     path="/api",
-    route_handlers=[BookingController, RoomController, CategoryController, AlertController],
+    route_handlers=[
+        BookingController,
+        RoomController,
+        CategoryController,
+        AlertController,
+    ],
 )
 
 __all__ = ["api_router"]
