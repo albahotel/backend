@@ -1,5 +1,5 @@
 from litestar.plugins.sqlalchemy import repository
-from sqlalchemy import and_, not_, exists
+from sqlalchemy import and_, not_, exists, select
 
 from datetime import date
 from typing import List, Optional
@@ -9,6 +9,11 @@ from src.core.models import Room, Booking
 
 class RoomRepository(repository.SQLAlchemySyncRepository[Room]):
     model_type = Room
+
+    def list_by_level(self, level: int) -> List[Room]:
+        return self.list(
+            statement=select(self.model_type).where(self.model_type.level == level)
+        )
 
     def get_free_rooms(self, start_date: date, end_date: date) -> List[Room]:
         overlapping = exists().where(

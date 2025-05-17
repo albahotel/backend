@@ -14,6 +14,7 @@ class Room(Base):
     __tablename__ = "rooms"
 
     number: Mapped[int] = mapped_column(Integer(), unique=True)
+    level: Mapped[int] = mapped_column(Integer(), nullable=True)
     capacity: Mapped[int] = mapped_column(Integer())
 
     bookings: Mapped[List["Booking"]] = relationship(back_populates="room")

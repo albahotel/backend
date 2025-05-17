@@ -4,7 +4,7 @@ from src.core.models import Room
 
 
 class RoomReadDTO(SQLAlchemyDTO[Room]):
-    config = SQLAlchemyDTOConfig()
+    config = SQLAlchemyDTOConfig(exclude={"alerts"})
 
 
 class RoomWriteDTO(SQLAlchemyDTO[Room]):

@@ -3,6 +3,7 @@ from litestar.di import Provide
 from litestar.exceptions import HTTPException
 
 from typing import List
+from datetime import date
 
 from src.core.models import Booking
 from src.core.schemas.booking import BookingReadDTO, BookingWriteDTO, BookingUpdateDTO
@@ -19,8 +20,21 @@ class BookingController(Controller):
     return_dto = BookingReadDTO
 
     @get(path="/", sync_to_thread=False)
-    def get_all(self, booking_repository: BookingRepository) -> List[Booking]:
-        return booking_repository.list()
+    def get_all(
+        self,
+        level: int,
+        start_date: date,
+        end_date: date,
+        booking_repository: BookingRepository,
+    ) -> List[Booking]:
+        if start_date >= end_date:
+            raise HTTPException(
+                detail="Дата выезда должна быть позже даты заезда", status_code=400
+            )
+
+        return booking_repository.get_for_period(
+            level=level, start_date=start_date, end_date=end_date
+        )
 
     @get(path="/{id:int}", sync_to_thread=False)
     def get(self, id: int, booking_repository: BookingRepository) -> Booking:

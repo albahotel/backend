@@ -20,8 +20,14 @@ class RoomController(Controller):
     return_dto = RoomReadDTO
 
     @get(path="/", sync_to_thread=False)
-    def get_all(self, room_repository: RoomRepository) -> List[Room]:
-        return room_repository.list()
+    def get_list(
+        self,
+        level: int,
+        room_repository: RoomRepository,
+    ) -> List[Room]:
+        return room_repository.list_by_level(
+            level=level,
+        )
 
     @get(path="/free", sync_to_thread=False)
     def get_free_rooms(
