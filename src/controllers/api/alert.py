@@ -19,4 +19,4 @@ class AlertController(Controller):
 
     @get(path="/", sync_to_thread=False)
     def get_all(self, alert_repository: AlertRepository) -> List[Alert]:
-        return alert_repository.list()
+        return alert_repository.get_awaiting_alerts()
