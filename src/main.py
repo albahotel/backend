@@ -49,7 +49,11 @@ cors_config = CORSConfig(allow_origins=["*"])
 async def redis_connection(app: Litestar) -> AsyncGenerator[None, None]:
     redis = getattr(app.state, "redis", None)
     if redis is None:
-        app.state.redis = aioredis.from_url(settings.redis.url + "/0")
+        app.state.redis = aioredis.from_url(
+            settings.redis.url + "/0",
+            decode_responses=False,
+            encoding="utf-8",
+        )
 
     try:
         yield
