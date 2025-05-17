@@ -2,7 +2,7 @@ from litestar.plugins.sqlalchemy import SQLAlchemyDTO, SQLAlchemyDTOConfig
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Literal, Union, Optional, List
+from typing import Literal, Optional, List
 
 from src.core.models import Alert
 
@@ -40,6 +40,7 @@ class AlertsReadData:
 @dataclass
 class AlertCreateData:
     """For mobile app"""
+
     room_number: int
     category_name: str
     comment: Optional[str] = None

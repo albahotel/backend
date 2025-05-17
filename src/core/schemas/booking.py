@@ -12,4 +12,4 @@ class BookingWriteDTO(SQLAlchemyDTO[Booking]):
 
 
 class BookingUpdateDTO(SQLAlchemyDTO[Booking]):
-    config = SQLAlchemyDTOConfig(exclude={"id", "room"}, partial=True)
+    config = SQLAlchemyDTOConfig(exclude={"id"}, partial=True)
