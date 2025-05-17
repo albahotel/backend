@@ -11,6 +11,7 @@ from src.core.repositories import (
     CategoryRepository,
     AlertRepository,
     AlertRepositoryAsync,
+    CustomerRepository,
 )
 
 
@@ -32,3 +33,7 @@ def provide_alert_repository(session: Session):
 
 async def provide_async_alert_repository(async_session: AsyncSession):
     return AlertRepositoryAsync(session=async_session)
+
+
+def provide_customer_repository(session: Session):
+    return CustomerRepository(session=session)
