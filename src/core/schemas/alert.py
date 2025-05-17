@@ -57,10 +57,10 @@ class AlertCompleteData:
 class AlertGetData:
     """For mobile app"""
 
-    alert_id: int
+    alert_ids: List[int]
 
 
 @dataclass
 class WSCommand:
-    action: Literal["create_alert", "complete_alert", "get_alert_status", "get_alerts"]
+    action: Literal["create_alert", "complete_alert", "get_alerts_status", "get_alerts"]
     data: Optional[dict] = None

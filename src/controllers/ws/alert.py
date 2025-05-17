@@ -82,16 +82,17 @@ class AlertWSController(WebsocketListener):
                     )
                     return
 
-                case "get_alert_status":
+                case "get_alerts_status":
                     if not isinstance(command.data, dict):
                         raise ValueError("Invalid data type")
-                    alert = await alert_repository.get(
-                        AlertGetData(**command.data).alert_id
+                    alerts = await alert_repository.get_awaiting_alerts_from_list(
+                        AlertGetData(**command.data).alert_ids
                     )
+                    alerts_data = [alert.to_dict() for alert in alerts ]
                     await socket.send_json(
                         {
-                            "action": "get_alert_status",
-                            "data": alert.to_dict(),
+                            "action": "get_alerts_status",
+                            "data": alerts_data,
                         },
                         serializer=orjson.dumps,
                     )
