@@ -14,6 +14,7 @@ class AlertController(Controller):
     dependencies = {
         "alert_repository": Provide(provide_alert_repository),
     }
+    tags = ["Alert"]
     return_dto = AlertReadDTO
 
     @get(path="/", sync_to_thread=False)

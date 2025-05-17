@@ -17,6 +17,7 @@ class RoomController(Controller):
         "booking_repository": Provide(provide_booking_repository),
         "room_repository": Provide(provide_room_repository),
     }
+    tags = ["Room"]
     return_dto = RoomReadDTO
 
     @get(path="/", sync_to_thread=False)

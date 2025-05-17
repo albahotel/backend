@@ -14,6 +14,7 @@ class CategoryController(Controller):
     dependencies = {
         "category_repository": Provide(provide_category_repository),
     }
+    tags = ["Category"]
     return_dto = CategoryReadDTO
 
     @get(path="/", sync_to_thread=False)
