@@ -8,7 +8,7 @@ class BookingReadDTO(SQLAlchemyDTO[Booking]):
 
 
 class BookingWriteDTO(SQLAlchemyDTO[Booking]):
-    config = SQLAlchemyDTOConfig(exclude={"id", "room"})
+    config = SQLAlchemyDTOConfig(exclude={"id", "room", "customers"})
 
 
 class BookingUpdateDTO(SQLAlchemyDTO[Booking]):
