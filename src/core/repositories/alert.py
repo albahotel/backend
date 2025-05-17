@@ -14,6 +14,7 @@ class AlertRepository(repository.SQLAlchemySyncRepository[Alert]):
         stmt = select(Alert).where(Alert.completed_at.is_(None))
         return list(self.session.execute(stmt).scalars().all())
 
+
 class AlertRepositoryAsync(repository.SQLAlchemyAsyncRepository[Alert]):
     model_type = Alert
 
@@ -21,7 +22,7 @@ class AlertRepositoryAsync(repository.SQLAlchemyAsyncRepository[Alert]):
         stmt = select(Alert).where(Alert.completed_at.is_(None))
         result = await self.session.execute(stmt)
         return list(result.scalars().all())
-    
+
     async def get_awaiting_alerts_from_list(self, ids: List[int]) -> List[Alert]:
         stmt = select(Alert).where(Alert.id.in_(ids))
         result = await self.session.execute(stmt)

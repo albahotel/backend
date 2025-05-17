@@ -88,7 +88,7 @@ class AlertWSController(WebsocketListener):
                     alerts = await alert_repository.get_awaiting_alerts_from_list(
                         AlertGetData(**command.data).alert_ids
                     )
-                    alerts_data = [alert.to_dict() for alert in alerts ]
+                    alerts_data = [alert.to_dict() for alert in alerts]
                     await socket.send_json(
                         {
                             "action": "get_alerts_status",

@@ -4,7 +4,7 @@ from src.core.models import Booking
 
 
 class BookingReadDTO(SQLAlchemyDTO[Booking]):
-    config = SQLAlchemyDTOConfig(exclude={"room"})
+    config = SQLAlchemyDTOConfig()
 
 
 class BookingWriteDTO(SQLAlchemyDTO[Booking]):
