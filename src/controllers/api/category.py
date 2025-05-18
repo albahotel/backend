@@ -17,6 +17,6 @@ class CategoryController(Controller):
     tags = ["Category"]
     return_dto = CategoryReadDTO
 
-    @get(path="/", sync_to_thread=False)
+    @get(path="/", sync_to_thread=False, exclude_from_auth=True)
     def get_all(self, category_repository: CategoryRepository) -> List[Category]:
         return category_repository.list()

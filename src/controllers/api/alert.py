@@ -17,6 +17,6 @@ class AlertController(Controller):
     tags = ["Alert"]
     return_dto = AlertReadDTO
 
-    @get(path="/", sync_to_thread=False)
+    @get(path="/", sync_to_thread=False, exclude_from_auth=True)
     def get_all(self, alert_repository: AlertRepository) -> List[Alert]:
         return alert_repository.get_awaiting_alerts()

@@ -19,6 +19,7 @@ websockets = "^15.0.1"
 redis = "^6.1.0"
 asyncpg = "^0.30.0"
 orjson = "^3.10.18"
+passlib = "^1.7.4"
 
 
 [tool.poetry.group.dev.dependencies]

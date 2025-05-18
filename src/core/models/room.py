@@ -1,4 +1,4 @@
-from sqlalchemy import Integer
+from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from typing import List, TYPE_CHECKING
@@ -19,3 +19,6 @@ class Room(Base):
 
     bookings: Mapped[List["Booking"]] = relationship(back_populates="room")
     alerts: Mapped[List["Alert"]] = relationship(back_populates="room")
+
+    plate_token: Mapped[str] = mapped_column(String(256), nullable=True, unique=True)
+    mac_address: Mapped[str] = mapped_column(String(256), nullable=True, unique=True)

@@ -1,4 +1,5 @@
 from litestar import Litestar, get
+from litestar.di import Provide
 from litestar.plugins.sqlalchemy import (
     AsyncSessionConfig,
     SQLAlchemyAsyncConfig,
@@ -12,6 +13,7 @@ from redis import asyncio as aioredis
 from contextlib import asynccontextmanager
 from collections.abc import AsyncGenerator
 
+from src.core.db_helper import db_helper
 from src.core.config import settings
 from src.controllers.api import api_router
 from src.controllers.ws import ws_router
@@ -66,4 +68,5 @@ app = Litestar(
     plugins=[sqlalchemy_plugin, async_sqlalchemy_plugin],
     cors_config=cors_config,
     lifespan=[redis_connection],
+    dependencies={"db_session": Provide(db_helper.session_dependency)},
 )

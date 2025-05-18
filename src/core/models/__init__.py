@@ -7,6 +7,8 @@ from .category import Category
 from .alert import Alert
 from .customer import Customer
 from .booking_customer import booking_customer
+from .token import Token
+from .admin import Admin
 
 __all__ = [
     "Base",
@@ -16,4 +18,6 @@ __all__ = [
     "Alert",
     "Customer",
     "booking_customer",
+    "Token",
+    "Admin",
 ]
