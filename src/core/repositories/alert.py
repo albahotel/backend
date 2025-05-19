@@ -1,7 +1,7 @@
 from litestar.plugins.sqlalchemy import repository
 from sqlalchemy import select
 
-from datetime import datetime
+from datetime import datetime, date
 from typing import List
 
 from src.core.models.alert import Alert
@@ -12,6 +12,10 @@ class AlertRepository(repository.SQLAlchemySyncRepository[Alert]):
 
     def get_awaiting_alerts(self) -> List[Alert]:
         stmt = select(Alert).where(Alert.completed_at.is_(None))
+        return list(self.session.execute(stmt).scalars().all())
+    
+    def get_alerts(self, date_from: date, date_to: date) -> List[Alert]:
+        stmt = select(Alert).where(Alert.created_at.between(date_from, date_to)).order_by(Alert.created_at)
         return list(self.session.execute(stmt).scalars().all())
 
 

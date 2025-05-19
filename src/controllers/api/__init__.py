@@ -6,6 +6,7 @@ from .category import CategoryController
 from .alert import AlertController
 from .customer import CustomerController
 from .auth import AuthController
+from .analytics import AnalyticsController
 
 api_router = Router(
     path="/api",
@@ -16,6 +17,7 @@ api_router = Router(
         AlertController,
         CustomerController,
         AuthController,
+        AnalyticsController,
     ],
 )
 
